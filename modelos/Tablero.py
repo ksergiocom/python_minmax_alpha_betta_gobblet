@@ -141,103 +141,100 @@ class Tablero:
 		# Piezas colocadas ------------------------------------------------------------------------
 		# Filas
 		for y in range(4):
-			piezas_maquina_fila = 0
-			tamano_maquina_fila = 0
-			piezas_humano_fila = 0
-			tamano_humano_fila = 0
+			piezas_maquina: list[Pieza] = []
+			piezas_humano: list[Pieza] = []
 			for x in range(4):
 				p = self.pieza_superior_en_posicion((x, y))
 				if p:
 					if p.jugador.nombre == "Maquina":
-						piezas_maquina_fila += 1
-						tamano_maquina_fila += p.tamano
+						piezas_maquina.append(p)
 					else:
-						piezas_humano_fila += 1
-						tamano_humano_fila += p.tamano
+						piezas_humano.append(p)
 			
 			# Maquina gana! Hacer esta jugada!
-			if piezas_maquina_fila == 4:
+			if len(piezas_maquina) == 4:
 				return 999999
-			# Nunca dejes que esto pase!
-			if piezas_humano_fila == 3 and piezas_maquina_fila == 0:
-				total -= 999999
-				
-			total += (4**piezas_maquina_fila) * tamano_maquina_fila
-			total -= (4**piezas_humano_fila) * tamano_humano_fila
+			
+			# Defenderse!
+			if len(piezas_humano) == 3:
+				max_humano = max(p.tamano for p in piezas_humano)
+				# Comprobamos si se puede bloquear
+				puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
+				if not puede_bloquear:
+					total -= 999999
 
-		# Columnas
+		# Filas
 		for x in range(4):
-			piezas_maquina_col = 0
-			piezas_humano_col = 0
-			tamano_maquina_col = 0
-			tamano_humano_col = 0
+			piezas_maquina: list[Pieza] = []
+			piezas_humano: list[Pieza] = []
 			for y in range(4):
 				p = self.pieza_superior_en_posicion((x, y))
 				if p:
 					if p.jugador.nombre == "Maquina":
-						piezas_maquina_col += 1
-						tamano_maquina_col += p.tamano
+						piezas_maquina.append(p)
 					else:
-						piezas_humano_col += 1
-						tamano_humano_col += p.tamano
+						piezas_humano.append(p)
+			
 			# Maquina gana! Hacer esta jugada!
-			if piezas_maquina_col == 4:
+			if len(piezas_maquina) == 4:
 				return 999999
-			# Nunca dejes que esto pase!
-			if piezas_humano_col == 3 and piezas_maquina_col == 0:
-				total -= 999999
-				
-			total += (4**piezas_maquina_col) * tamano_maquina_col
-			total -= (4**piezas_humano_col) * tamano_humano_col
+			
+			# Defenderse!
+			if len(piezas_humano) == 3:
+				max_humano = max(p.tamano for p in piezas_humano)
+				# Comprobamos si se puede bloquear
+				puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
+				if not puede_bloquear:
+					total -= 999999
+
 
 		# Diagonal principal
-		piezas_maquina_diag = 0
-		piezas_humano_diag = 0
-		tamano_maquina_diag = 0
-		tamano_humano_diag = 0
+		piezas_maquina = []
+		piezas_humano = []
 		for i in range(4):
 			p = self.pieza_superior_en_posicion((i, i))
 			if p:
 				if p.jugador.nombre == "Maquina":
-					piezas_maquina_diag += 1
-					tamano_maquina_diag += p.tamano
+					piezas_maquina.append(p)
 				else:
-					piezas_humano_diag += 1
-					tamano_humano_diag += p.tamano
-		# Maquina gana! Hacer esta jugada!
-		if piezas_maquina_diag == 4:
+					piezas_humano.append(p)
+
+		if len(piezas_maquina) == 4:
 			return 999999
-		# Nunca dejes que esto pase!
-		if piezas_humano_diag == 3 and piezas_maquina_diag == 0:
-			total -= 999999
-			
-		total += (4**piezas_maquina_diag) * tamano_maquina_diag
-		total -= (4**piezas_humano_diag) * tamano_humano_diag
+
+		if len(piezas_humano) == 3:
+			max_humano = max(p.tamano for p in piezas_humano)
+			puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
+			if not puede_bloquear:
+				total -= 999999
+
+		total += (4 ** len(piezas_maquina)) * sum(p.tamano for p in piezas_maquina)
+		total -= (4 ** len(piezas_humano)) * sum(p.tamano for p in piezas_humano)
+
 
 		# Diagonal secundaria
-		piezas_maquina_diag2 = 0
-		piezas_humano_diag2 = 0
-		tamano_maquina_diag2 = 0
-		tamano_humano_diag2 = 0
+		piezas_maquina = []
+		piezas_humano = []
 		for i in range(4):
 			p = self.pieza_superior_en_posicion((i, 3 - i))
 			if p:
 				if p.jugador.nombre == "Maquina":
-					piezas_maquina_diag2 += 1
-					tamano_maquina_diag2 += p.tamano
+					piezas_maquina.append(p)
 				else:
-					piezas_humano_diag2 += 1
-					tamano_humano_diag2 += p.tamano
-     
-		# Maquina gana! Hacer esta jugada!
-		if piezas_maquina_diag2 == 4:
+					piezas_humano.append(p)
+
+		if len(piezas_maquina) == 4:
 			return 999999
-		# Nunca dejes que esto pase!
-		if piezas_humano_diag2 == 3 and piezas_maquina_diag2 == 0:
-			total -= 999999
-   
-		total += (4**piezas_maquina_diag2) * tamano_maquina_diag2
-		total -= (4**piezas_humano_diag2) * tamano_humano_diag2
+
+		if len(piezas_humano) == 3:
+			max_humano = max(p.tamano for p in piezas_humano)
+			puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
+			if not puede_bloquear:
+				total -= 999999
+
+		total += (4 ** len(piezas_maquina)) * sum(p.tamano for p in piezas_maquina)
+		total -= (4 ** len(piezas_humano)) * sum(p.tamano for p in piezas_humano)
+
 
 		# Esquinas --------------------------------------------------------------------------------
 		esquinas = [(0, 0), (0, 3), (3, 0), (3, 3)]
