@@ -155,8 +155,12 @@ class Tablero:
 			if len(piezas_maquina) == 4:
 				return 999999
 			
-			# Defenderse!
-			if len(piezas_humano) == 3:
+			# Nunca quitar una pieza que deje una linea del humano en 4 (quitar una que tapara una jugada ganadora)
+			elif len(piezas_humano) == 4:
+				total -= 999999
+			
+			# Comprobar si tenemos una pieza despues para bloquear la jugada del humano
+			elif len(piezas_humano) == 3:
 				max_humano = max(p.tamano for p in piezas_humano)
 				# Comprobamos si se puede bloquear
 				puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
@@ -183,8 +187,12 @@ class Tablero:
 			if len(piezas_maquina) == 4:
 				return 999999
 			
-			# Defenderse!
-			if len(piezas_humano) == 3:
+			# Nunca quitar una pieza que deje una linea del humano en 4 (quitar una que tapara una jugada ganadora)
+			elif len(piezas_humano) == 4:
+				total -= 999999
+			
+			# Comprobar si tenemos una pieza despues para bloquear la jugada del humano
+			elif len(piezas_humano) == 3:
 				max_humano = max(p.tamano for p in piezas_humano)
 				# Comprobamos si se puede bloquear
 				puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
@@ -210,7 +218,12 @@ class Tablero:
 		if len(piezas_maquina) == 4:
 			return 999999
 
-		if len(piezas_humano) == 3:
+		# Nunca quitar una pieza que deje una linea del humano en 4 (quitar una que tapara una jugada ganadora)
+		elif len(piezas_humano) == 4:
+			total -= 999999
+			
+		# Comprobar si tenemos una pieza despues para bloquear la jugada del humano
+		elif len(piezas_humano) == 3:
 			max_humano = max(p.tamano for p in piezas_humano)
 			puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
 			if not puede_bloquear:
@@ -233,8 +246,12 @@ class Tablero:
 
 		if len(piezas_maquina) == 4:
 			return 999999
-
-		if len(piezas_humano) == 3:
+#		 Nunca quitar una pieza que deje una linea del humano en 4 (quitar una que tapara una jugada ganadora)
+		elif len(piezas_humano) == 4:
+			total -= 999999
+			
+		# Comprobar si tenemos una pieza despues para bloquear la jugada del humano
+		elif len(piezas_humano) == 3:
 			max_humano = max(p.tamano for p in piezas_humano)
 			puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
 			if not puede_bloquear:
