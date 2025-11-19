@@ -145,6 +145,7 @@ class Tablero:
 			tamano_maquina_fila = 0
 			piezas_humano_fila = 0
 			tamano_humano_fila = 0
+			tamano_max_humano_fila = 0  # <-- nueva variable
 			for x in range(4):
 				p = self.pieza_superior_en_posicion((x, y))
 				if p:
@@ -154,12 +155,13 @@ class Tablero:
 					else:
 						piezas_humano_fila += 1
 						tamano_humano_fila += p.tamano
+						tamano_max_humano_fila = max(tamano_max_humano_fila, p.tamano)
 			
 			# Maquina gana! Hacer esta jugada!
 			if piezas_maquina_fila == 4:
 				return 999999
-			# Nunca dejes que esto pase!
-			if piezas_humano_fila == 3 and piezas_maquina_fila == 0:
+			# Penalización si humano tiene 3 y la máquina tiene pieza(s) más pequeñas
+			if piezas_humano_fila == 3 and (piezas_maquina_fila == 0 or tamano_maquina_fila < tamano_max_humano_fila):
 				total -= 999999
 				
 			total += (4**piezas_maquina_fila) * tamano_maquina_fila
@@ -171,6 +173,7 @@ class Tablero:
 			piezas_humano_col = 0
 			tamano_maquina_col = 0
 			tamano_humano_col = 0
+			tamano_max_humano_col = 0
 			for y in range(4):
 				p = self.pieza_superior_en_posicion((x, y))
 				if p:
@@ -180,13 +183,13 @@ class Tablero:
 					else:
 						piezas_humano_col += 1
 						tamano_humano_col += p.tamano
-			# Maquina gana! Hacer esta jugada!
+						tamano_max_humano_col = max(tamano_max_humano_col, p.tamano)
+
 			if piezas_maquina_col == 4:
 				return 999999
-			# Nunca dejes que esto pase!
-			if piezas_humano_col == 3 and piezas_maquina_col == 0:
+			if piezas_humano_col == 3 and (piezas_maquina_col == 0 or tamano_maquina_col < tamano_max_humano_col):
 				total -= 999999
-				
+
 			total += (4**piezas_maquina_col) * tamano_maquina_col
 			total -= (4**piezas_humano_col) * tamano_humano_col
 
@@ -195,6 +198,7 @@ class Tablero:
 		piezas_humano_diag = 0
 		tamano_maquina_diag = 0
 		tamano_humano_diag = 0
+		tamano_max_humano_diag = 0
 		for i in range(4):
 			p = self.pieza_superior_en_posicion((i, i))
 			if p:
@@ -204,13 +208,13 @@ class Tablero:
 				else:
 					piezas_humano_diag += 1
 					tamano_humano_diag += p.tamano
-		# Maquina gana! Hacer esta jugada!
+					tamano_max_humano_diag = max(tamano_max_humano_diag, p.tamano)
+
 		if piezas_maquina_diag == 4:
 			return 999999
-		# Nunca dejes que esto pase!
-		if piezas_humano_diag == 3 and piezas_maquina_diag == 0:
+		if piezas_humano_diag == 3 and (piezas_maquina_diag == 0 or tamano_maquina_diag < tamano_max_humano_diag):
 			total -= 999999
-			
+
 		total += (4**piezas_maquina_diag) * tamano_maquina_diag
 		total -= (4**piezas_humano_diag) * tamano_humano_diag
 
@@ -219,6 +223,7 @@ class Tablero:
 		piezas_humano_diag2 = 0
 		tamano_maquina_diag2 = 0
 		tamano_humano_diag2 = 0
+		tamano_max_humano_diag2 = 0
 		for i in range(4):
 			p = self.pieza_superior_en_posicion((i, 3 - i))
 			if p:
@@ -228,16 +233,16 @@ class Tablero:
 				else:
 					piezas_humano_diag2 += 1
 					tamano_humano_diag2 += p.tamano
-     
-		# Maquina gana! Hacer esta jugada!
+					tamano_max_humano_diag2 = max(tamano_max_humano_diag2, p.tamano)
+
 		if piezas_maquina_diag2 == 4:
 			return 999999
-		# Nunca dejes que esto pase!
-		if piezas_humano_diag2 == 3 and piezas_maquina_diag2 == 0:
+		if piezas_humano_diag2 == 3 and (piezas_maquina_diag2 == 0 or tamano_maquina_diag2 < tamano_max_humano_diag2):
 			total -= 999999
-   
+
 		total += (4**piezas_maquina_diag2) * tamano_maquina_diag2
 		total -= (4**piezas_humano_diag2) * tamano_humano_diag2
+
 
 		# Esquinas --------------------------------------------------------------------------------
 		esquinas = [(0, 0), (0, 3), (3, 0), (3, 3)]
