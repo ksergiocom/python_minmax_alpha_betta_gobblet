@@ -98,5 +98,5 @@ def mini_max(tablero: Tablero, nivel_actual: int, nivel_max: int, alfa: int, bet
             if beta <= alfa:
                 break
 
-    print(f"\t->\tMinmax: [Valor:{mejor_valor}][Alfa:{alfa}][Beta:{beta}]")
+    print(f"[{"MAX" if tablero.turno.nombre == "Maquina" else "min"}]\t[Valor:{mejor_valor:7} ]\t[Alfa:{alfa:7} ]\t[Beta:{beta:7} ]")
     return mejor_tablero if mejor_tablero else tablero

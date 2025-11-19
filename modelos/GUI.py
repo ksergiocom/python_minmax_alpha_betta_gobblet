@@ -183,6 +183,7 @@ class GUI:
 	# Realiza el movimiento, re-renderiza la UI y comprueba sí
 	# la máquina ha ganado. Por ultimo devuelve el control al jugador
 	def movimiento_maquina(self):
+		print("###################\nTurno Máquina\n###################")
 		self.mensaje.config(text="La máquina esta eligiendo una jugada...")
 		self.root.update()
 		mejor_tablero = mini_max(self.tablero, 0, 2, -999999, +999999)
