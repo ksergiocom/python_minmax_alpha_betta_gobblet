@@ -162,8 +162,12 @@ class Tablero:
 				puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
 				if not puede_bloquear:
 					total -= 999999
+     
+         	# Suma normal a la heurística
+			total += (4 ** len(piezas_maquina)) * sum(p.tamano for p in piezas_maquina)
+			total -= (4 ** len(piezas_humano)) * sum(p.tamano for p in piezas_humano)
 
-		# Filas
+		# Columnas
 		for x in range(4):
 			piezas_maquina: list[Pieza] = []
 			piezas_humano: list[Pieza] = []
@@ -186,6 +190,10 @@ class Tablero:
 				puede_bloquear = any(p.tamano >= max_humano for p in piezas_maquina)
 				if not puede_bloquear:
 					total -= 999999
+     
+			# Suma normal a la heurística
+			total += (4 ** len(piezas_maquina)) * sum(p.tamano for p in piezas_maquina)
+			total -= (4 ** len(piezas_humano)) * sum(p.tamano for p in piezas_humano)
 
 
 		# Diagonal principal
