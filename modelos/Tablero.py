@@ -147,6 +147,13 @@ class Tablero:
 					else:
 						piezas_humano_fila += 1
 						tamano_humano_fila += p.tamano
+      
+				if piezas_humano_fila == 3 and piezas_maquina_fila == 0:
+					total  -= 1000
+				if piezas_maquina_fila == 4:
+					return +999999
+				if piezas_humano_fila == 4:
+					return -999999
 	  
 			total += (2 ** piezas_maquina_fila) * tamano_maquina_fila
 			total -= (2 ** piezas_humano_fila) * tamano_humano_fila
@@ -167,6 +174,13 @@ class Tablero:
 					else:
 						piezas_humano_col += 1
 						tamano_humano_col += p.tamano
+      
+				if piezas_humano_col == 3 and piezas_maquina_col == 0:
+					total  -= 1000
+				if piezas_maquina_col == 4:
+					return +999999
+				if piezas_humano_col == 4:
+					return -999999
 
 			total += (2 ** piezas_maquina_col) * tamano_maquina_col
 			total -= (2 ** piezas_humano_col) * tamano_humano_col	  
@@ -187,6 +201,13 @@ class Tablero:
 					piezas_humano_diag += 1
 					tamano_humano_diag += p.tamano
 	 
+			if piezas_humano_diag == 3 and piezas_maquina_diag == 0:
+				total  -= 1000
+			if piezas_maquina_diag == 4:
+				return +999999
+			if piezas_humano_diag == 4:
+				return -999999
+  
 		total += (2 ** piezas_maquina_diag) * tamano_maquina_diag
 		total -= (2 ** piezas_humano_diag) * tamano_humano_diag
 
@@ -205,6 +226,13 @@ class Tablero:
 				else:
 					piezas_humano_diag2 += 1
 					tamano_humano_diag2 += p.tamano
+     
+			if piezas_humano_diag2 == 3 and piezas_maquina_diag2 == 0:
+				total  -= 1000
+			if piezas_maquina_diag2 == 4:
+				return +999999
+			if piezas_humano_diag2 == 4:
+				return -999999
 
 		total += (2 ** piezas_maquina_diag2) * tamano_maquina_diag2
 		total -= (2 ** piezas_humano_diag2) * tamano_humano_diag2	 
